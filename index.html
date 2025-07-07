@@ -60,7 +60,8 @@
         /* 3. ELEMENT STYLES */
         h1 {
             font-size: 3.5rem;
-            margin-bottom: 0.5rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
             font-weight: bold; /* Use the bold variant for the main title */
         }
 
@@ -126,6 +127,13 @@
         .font-display.italic {
             font-style: italic;
         }
+
+        .font-display.half-size {
+            font-size: 1.5rem;
+        }
+        .font-display.double-size {
+            font-size: 6rem;
+        }
         
         /* 4. RESPONSIVE DESIGN FOR MOBILE */
         @media (max-width: 600px) {
@@ -137,6 +145,12 @@
             }
             .font-display {
                 font-size: 2rem;
+            }
+            .font-display.half-size {
+                font-size: 1rem;
+            }
+            .font-display.double-size {
+                font-size: 4rem;
             }
             #add-symbol-btn {
                 padding: 0.75rem 1rem;
@@ -164,6 +178,14 @@
     <div id="display-bold" class="font-display bold"></div>
     <div id="display-italic" class="font-display italic"></div>
 
+    <div id="display-regular-half" class="font-display regular half-size"></div>
+    <div id="display-bold-half" class="font-display bold half-size"></div>
+    <div id="display-italic-half" class="font-display italic half-size"></div>
+    
+    <div id="display-regular-double" class="font-display regular double-size"></div>
+    <div id="display-bold-double" class="font-display bold double-size"></div>
+    <div id="display-italic-double" class="font-display italic double-size"></div>
+
     <script>
         // 5. JAVASCRIPT LOGIC
         // This script handles the user interaction
@@ -175,10 +197,18 @@
         const displayBold = document.getElementById('display-bold');
         const displayItalic = document.getElementById('display-italic');
 
+        const displayRegularHalf = document.getElementById('display-regular-half');
+        const displayBoldHalf = document.getElementById('display-bold-half');
+        const displayItalicHalf = document.getElementById('display-italic-half');
+        
+        const displayRegularDouble = document.getElementById('display-regular-double');
+        const displayBoldDouble = document.getElementById('display-bold-double');
+        const displayItalicDouble = document.getElementById('display-italic-double');
+
         // This is the default text that shows when the input is empty
         const placeholderText = "The quick orange ₿adger jumps over the lazy Bear.";
 
-        // A function to update all three display areas
+        // A function to update all nine display areas
         function updateDisplayText() {
             // Use the text from the input box. If it's empty, use our placeholder text.
             const textToShow = textInput.value || placeholderText;
@@ -187,6 +217,14 @@
             displayRegular.textContent = textToShow;
             displayBold.textContent = textToShow;
             displayItalic.textContent = textToShow;
+
+            displayRegularHalf.textContent = textToShow;
+            displayBoldHalf.textContent = textToShow;
+            displayItalicHalf.textContent = textToShow;
+
+            displayRegularDouble.textContent = textToShow;
+            displayBoldDouble.textContent = textToShow;
+            displayItalicDouble.textContent = textToShow;
         }
 
         // --- Event Listeners ---
