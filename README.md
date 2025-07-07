@@ -2,4 +2,6 @@
 # InterStrategy
 A fork of the Inter font with the Bitcoin ₿ symbol (U+20BF) replaced with the Strategy ₿ symbol
 
+Playground: https://ladoger.github.io/InterStrategy/
+
 Download `InterStrategy-Regular.ttf` `InterStrategy-Bold.ttf` `InterStrategy-Italic.ttf` to use in your content.
