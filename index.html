@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InterStrategy Font Playground</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <meta property="og:title" content="InterStrategy">
+    <meta property="og:description" content="InterStrategy is a fork of the Inter font">
+    <meta property="og:type" content="gallery">
+    <meta property="og:url" content="https://github.com/LaDoger/InterStrategy">
+    <meta property="og:image" content="https://github.com/LaDoger/InterStrategy/1200-600.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="600">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="InterStrategy">
+    <meta name="twitter:description" content="InterStrategy is a fork of the Inter font">
+    <meta name="twitter:image" content="https://github.com/LaDoger/InterStrategy/1200-600.jpg">
+    <meta name="twitter:site" content="@LaDoger21">
+
+    <style>
+        /* 1. FONT DEFINITIONS */
+        /* This section loads your custom fonts. The browser will automatically
+           select the correct file based on the font-weight and font-style CSS properties. */
+        @font-face {
+            font-family: 'InterStrategy';
+            src: url('InterStrategy-Regular.ttf') format('truetype');
+            font-weight: normal; /* Corresponds to 400 */
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'InterStrategy';
+            src: url('InterStrategy-Bold.ttf') format('truetype');
+            font-weight: bold; /* Corresponds to 700 */
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'InterStrategy';
+            src: url('InterStrategy-Italic.ttf') format('truetype');
+            font-weight: normal; /* Corresponds to 400 */
+            font-style: italic;
+        }
+
+        /* 2. GENERAL STYLES */
+        body {
+            font-family: 'InterStrategy', sans-serif; /* Use InterStrategy as the default font */
+            background-color: #ffffff;
+            color: #000000;
+            max-width: 768px;
+            margin: 2rem auto; /* Center the content on larger screens */
+            padding: 0 1rem;  /* Add space on the sides for smaller screens */
+            -webkit-font-smoothing: antialiased; /* Improves font rendering on some displays */
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* 3. ELEMENT STYLES */
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold; /* Use the bold variant for the main title */
+        }
+
+        p.description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-top: 0;
+            max-width: 65ch; /* Improves readability */
+        }
+
+        a {
+            color: #000000;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .input-container {
+            display: flex;
+            margin: 1rem 0;
+        }
+
+        #text-input {
+            flex-grow: 1; /* Makes the input take up available space */
+            padding: 0.75rem;
+            font-size: 1.2rem;
+            border: 3px solid #000000;
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'InterStrategy', sans-serif; /* Ensure input uses the font */
+            border-radius: 0; /* Sharp corners */
+            -webkit-appearance: none; /* Removes default iOS styling */
+        }
+
+        #add-symbol-btn {
+            padding: 0.25rem 2rem;
+            font-size: 2.5rem;
+            border: 3px solid #000000;
+            border-left: none; /* Merge the button and input borders */
+            background-color: #ffffff;
+            color: #000000;
+            cursor: pointer;
+            font-family: 'InterStrategy', sans-serif; /* Ensure button uses the font for the symbol */
+            border-radius: 0;
+        }
+
+        .font-display {
+            font-size: 3rem;
+            margin: 1.2rem 0;
+            line-height: 1.2;
+            word-wrap: break-word; /* Prevents long text from overflowing */
+            border-left: 3px solid #000000; /* Adds a visual separator */
+            padding-left: 1rem;
+        }
+
+        /* Use CSS classes to apply the specific font styles */
+        .font-display.regular {
+            font-weight: normal;
+            font-style: normal;
+        }
+        .font-display.bold {
+            font-weight: bold;
+        }
+        .font-display.italic {
+            font-style: italic;
+        }
+        
+        /* 4. RESPONSIVE DESIGN FOR MOBILE */
+        @media (max-width: 600px) {
+            body {
+                margin-top: 1rem;
+            }
+            h1 {
+                font-size: 2.5rem;
+            }
+            .font-display {
+                font-size: 2rem;
+            }
+            #add-symbol-btn {
+                padding: 0.75rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>InterStrategy</h1>
+
+    <p class="description">
+        Playground for the InterStrategy font. This font is identical to the Inter font with only one difference: The Bitcoin symbol (U+20BF) is now the Strategy ₿ symbol.
+        <!-- You can replace '#' with the actual download link for your font files -->
+        <a href="https://github.com/LaDoger/InterStrategy" download>Download</a>
+    </p>
+
+    <div class="input-container">
+        <input type="text" id="text-input" placeholder="Type something..." aria-label="Text to display">
+        <button id="add-symbol-btn" title="Add ₿ Symbol">₿</button>
+    </div>
+
+    <!-- The text you type will appear here in the three font styles -->
+    <div id="display-regular" class="font-display regular"></div>
+    <div id="display-bold" class="font-display bold"></div>
+    <div id="display-italic" class="font-display italic"></div>
+
+    <script>
+        // 5. JAVASCRIPT LOGIC
+        // This script handles the user interaction
+        
+        // Get references to the HTML elements we need to work with
+        const textInput = document.getElementById('text-input');
+        const addSymbolBtn = document.getElementById('add-symbol-btn');
+        const displayRegular = document.getElementById('display-regular');
+        const displayBold = document.getElementById('display-bold');
+        const displayItalic = document.getElementById('display-italic');
+
+        // This is the default text that shows when the input is empty
+        const placeholderText = "The quick orange ₿adger jumps over the lazy Bear.";
+
+        // A function to update all three display areas
+        function updateDisplayText() {
+            // Use the text from the input box. If it's empty, use our placeholder text.
+            const textToShow = textInput.value || placeholderText;
+
+            // Set the text content of each display element
+            displayRegular.textContent = textToShow;
+            displayBold.textContent = textToShow;
+            displayItalic.textContent = textToShow;
+        }
+
+        // --- Event Listeners ---
+
+        // 1. When the user types, pastes, or deletes in the input box
+        textInput.addEventListener('input', updateDisplayText);
+
+        // 2. When the user clicks the '₿' button
+        addSymbolBtn.addEventListener('click', () => {
+            textInput.value += '₿'; // Add the symbol to the end of the input
+            textInput.focus();      // Put the cursor back in the input box for a smooth experience
+            updateDisplayText();    // Update the display immediately
+        });
+
+        // --- Initial Load ---
+        
+        // Call the function once when the page loads to set the initial state
+        updateDisplayText();
+
+    </script>
+</body>
+</html>
