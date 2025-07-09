@@ -22,60 +22,62 @@
 
     <style>
         /* 1. FONT DEFINITIONS */
-        /* This section loads your custom fonts. The browser will automatically
-           select the correct file based on the font-weight and font-style CSS properties. */
         @font-face {
             font-family: 'InterStrategy';
             src: url('InterStrategy-Regular.ttf') format('truetype');
-            font-weight: normal; /* Corresponds to 400 */
-            font-style: normal;
+            font-weight: normal; font-style: normal;
         }
-
         @font-face {
             font-family: 'InterStrategy';
             src: url('InterStrategy-Bold.ttf') format('truetype');
-            font-weight: bold; /* Corresponds to 700 */
-            font-style: normal;
+            font-weight: bold; font-style: normal;
         }
-
         @font-face {
             font-family: 'InterStrategy';
             src: url('InterStrategy-Italic.ttf') format('truetype');
-            font-weight: normal; /* Corresponds to 400 */
-            font-style: italic;
+            font-weight: normal; font-style: italic;
         }
 
         /* 2. GENERAL STYLES */
         body {
-            font-family: 'InterStrategy', sans-serif; /* Use InterStrategy as the default font */
+            font-family: 'InterStrategy', sans-serif;
             background-color: #ffffff;
             color: #000000;
             max-width: 768px;
-            margin: 2rem auto; /* Center the content on larger screens */
-            padding: 0 1rem;  /* Add space on the sides for smaller screens */
-            -webkit-font-smoothing: antialiased; /* Improves font rendering on some displays */
+            margin: 2rem auto;
+            padding: 0 1rem;
+            -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
         }
 
-        /* 3. ELEMENT STYLES */
+        /* 3. HEADER & TITLE */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
         h1 {
             font-size: 3.5rem;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-weight: bold; /* Use the bold variant for the main title */
+            margin: 0;
+            font-weight: bold;
         }
-
+        
+        /* 4. ELEMENT STYLES */
         p.description {
             font-size: 1.1rem;
             line-height: 1.6;
             margin-top: 0;
-            max-width: 65ch; /* Improves readability */
+            max-width: 65ch;
         }
 
         a {
             color: #000000;
             font-weight: bold;
             text-decoration: underline;
+            transition: color 0.3s ease-in-out;
         }
 
         .input-container {
@@ -84,87 +86,125 @@
         }
 
         #text-input {
-            flex-grow: 1; /* Makes the input take up available space */
+            flex-grow: 1;
             padding: 0.75rem;
             font-size: 1.2rem;
             border: 3px solid #000000;
             background-color: #ffffff;
             color: #000000;
-            font-family: 'InterStrategy', sans-serif; /* Ensure input uses the font */
-            border-radius: 0; /* Sharp corners */
-            -webkit-appearance: none; /* Removes default iOS styling */
+            font-family: 'InterStrategy', sans-serif;
+            border-radius: 0;
+            -webkit-appearance: none;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
         }
 
         #add-symbol-btn {
             padding: 0.25rem 2rem;
             font-size: 2.5rem;
             border: 3px solid #000000;
-            border-left: none; /* Merge the button and input borders */
+            border-left: none;
             background-color: #ffffff;
             color: #000000;
             cursor: pointer;
-            font-family: 'InterStrategy', sans-serif; /* Ensure button uses the font for the symbol */
+            font-family: 'InterStrategy', sans-serif;
             border-radius: 0;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
         }
 
         .font-display {
             font-size: 3rem;
             margin: 1.2rem 0;
             line-height: 1.2;
-            word-wrap: break-word; /* Prevents long text from overflowing */
-            border-left: 3px solid #000000; /* Adds a visual separator */
+            word-wrap: break-word;
+            border-left: 3px solid #000000;
             padding-left: 1rem;
+            transition: border-left-color 0.3s ease-in-out;
+        }
+        .font-display.regular { font-weight: normal; font-style: normal; }
+        .font-display.bold { font-weight: bold; }
+        .font-display.italic { font-style: italic; }
+        .font-display.half-size { font-size: 1.5rem; }
+        .font-display.double-size { font-size: 6rem; }
+
+        /* 5. THEME TOGGLE & DARK MODE */
+        #theme-toggle {
+            width: 70px;
+            height: 38px;
+            background-color: #000000; /* Track color in light mode */
+            border-radius: 19px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            padding: 0;
+            transition: background-color 0.3s ease-in-out;
+            -webkit-appearance: none;
         }
 
-        /* Use CSS classes to apply the specific font styles */
-        .font-display.regular {
-            font-weight: normal;
-            font-style: normal;
-        }
-        .font-display.bold {
-            font-weight: bold;
-        }
-        .font-display.italic {
-            font-style: italic;
-        }
-
-        .font-display.half-size {
-            font-size: 1.5rem;
-        }
-        .font-display.double-size {
-            font-size: 6rem;
+        .knob {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 30px;
+            height: 30px;
+            background-color: #ffffff; /* Knob color in light mode */
+            border-radius: 50%;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
         }
         
-        /* 4. RESPONSIVE DESIGN FOR MOBILE */
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        body.dark-mode #theme-toggle {
+            background-color: #ffffff; /* Track color in dark mode */
+        }
+        
+        body.dark-mode .knob {
+            background-color: #000000; /* Knob color in dark mode */
+            transform: translateX(32px); /* Slide the knob to the right */
+        }
+
+        body.dark-mode a { color: #ffffff; }
+        body.dark-mode #text-input {
+            background-color: #000000;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+        body.dark-mode #add-symbol-btn {
+            background-color: #000000;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+        body.dark-mode .font-display { border-left-color: #ffffff; }
+        
+        /* 6. RESPONSIVE DESIGN FOR MOBILE */
         @media (max-width: 600px) {
-            body {
-                margin-top: 1rem;
-            }
-            h1 {
-                font-size: 2.5rem;
-            }
-            .font-display {
-                font-size: 2rem;
-            }
-            .font-display.half-size {
-                font-size: 1rem;
-            }
-            .font-display.double-size {
-                font-size: 4rem;
-            }
-            #add-symbol-btn {
-                padding: 0.75rem 1rem;
+            body { margin-top: 1rem; }
+            h1 { font-size: 2.5rem; }
+            .font-display { font-size: 2rem; }
+            .font-display.half-size { font-size: 1rem; }
+            .font-display.double-size { font-size: 4rem; }
+            #add-symbol-btn { padding: 0.75rem 1rem; }
+            #theme-toggle {
+                transform: scale(0.85);
+                transform-origin: right center;
             }
         }
     </style>
 </head>
 <body>
 
-    <h1>InterStrategy</h1>
+    <div class="header-container">
+        <h1>InterStrategy</h1>
+        <button id="theme-toggle" title="Toggle theme">
+            <span class="knob"></span>
+        </button>
+    </div>
 
     <p class="description">
         Playground for the <b>InterStrategy</b> font. This font is identical to the <b>Inter</b> font with only one difference: The Bitcoin symbol (U+20BF) is now the Strategy ₿ symbol.
-        <!-- You can replace '#' with the actual download link for your font files -->
         <a href="https://github.com/LaDoger/InterStrategy" download>Download</a>
     </p>
 
@@ -187,61 +227,65 @@
     <div id="display-italic-double" class="font-display italic double-size"></div>
 
     <script>
-        // 5. JAVASCRIPT LOGIC
-        // This script handles the user interaction
+        // 7. JAVASCRIPT LOGIC
         
-        // Get references to the HTML elements we need to work with
+        // --- Theme Toggler Logic ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const bodyEl = document.body;
+
+        const applySavedTheme = () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                bodyEl.classList.add('dark-mode');
+            }
+        };
+
+        themeToggleBtn.addEventListener('click', () => {
+            bodyEl.classList.toggle('dark-mode');
+            if (bodyEl.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.removeItem('theme');
+            }
+        });
+        
+        // --- Font Playground Logic ---
         const textInput = document.getElementById('text-input');
         const addSymbolBtn = document.getElementById('add-symbol-btn');
         const displayRegular = document.getElementById('display-regular');
         const displayBold = document.getElementById('display-bold');
         const displayItalic = document.getElementById('display-italic');
-
         const displayRegularHalf = document.getElementById('display-regular-half');
         const displayBoldHalf = document.getElementById('display-bold-half');
         const displayItalicHalf = document.getElementById('display-italic-half');
-        
         const displayRegularDouble = document.getElementById('display-regular-double');
         const displayBoldDouble = document.getElementById('display-bold-double');
         const displayItalicDouble = document.getElementById('display-italic-double');
-
-        // This is the default text that shows when the input is empty
         const placeholderText = "The quick orange ₿adger jumps over the lazy Bear.";
 
-        // A function to update all nine display areas
         function updateDisplayText() {
-            // Use the text from the input box. If it's empty, use our placeholder text.
             const textToShow = textInput.value || placeholderText;
-
-            // Set the text content of each display element
             displayRegular.textContent = textToShow;
             displayBold.textContent = textToShow;
             displayItalic.textContent = textToShow;
-
             displayRegularHalf.textContent = textToShow;
             displayBoldHalf.textContent = textToShow;
             displayItalicHalf.textContent = textToShow;
-
             displayRegularDouble.textContent = textToShow;
             displayBoldDouble.textContent = textToShow;
             displayItalicDouble.textContent = textToShow;
         }
 
         // --- Event Listeners ---
-
-        // 1. When the user types, pastes, or deletes in the input box
         textInput.addEventListener('input', updateDisplayText);
-
-        // 2. When the user clicks the '₿' button
         addSymbolBtn.addEventListener('click', () => {
-            textInput.value += '₿'; // Add the symbol to the end of the input
-            textInput.focus();      // Put the cursor back in the input box for a smooth experience
-            updateDisplayText();    // Update the display immediately
+            textInput.value += '₿';
+            textInput.focus();
+            updateDisplayText();
         });
 
         // --- Initial Load ---
-        
-        // Call the function once when the page loads to set the initial state
+        applySavedTheme();
         updateDisplayText();
 
     </script>
