@@ -315,22 +315,8 @@
             } else {
                 themeKnob.classList.remove('slide-right');
             }
-            
-            if (theme === 'light') {
-                localStorage.removeItem('theme');
-            } else {
-                localStorage.setItem('theme', theme);
-            }
+            // Removed localStorage logic to prevent saving the theme
         }
-
-        const applySavedTheme = () => {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme && themes.includes(savedTheme)) {
-                applyTheme(savedTheme);
-            } else {
-                applyTheme('light');
-            }
-        };
 
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = bodyEl.dataset.theme || 'light';
@@ -376,7 +362,8 @@
         });
 
         // --- Initial Load ---
-        applySavedTheme();
+        // The applySavedTheme function and its call have been removed.
+        // The page now loads with the default CSS theme every time.
         updateDisplayText();
 
     </script>
