@@ -38,11 +38,18 @@
             font-weight: normal; font-style: italic;
         }
 
-        /* 2. GENERAL STYLES */
+        /* -- Color Variables -- */
+        :root {
+            --c-white: #ffffff;
+            --c-black: #000000;
+            --c-orange: #fa660f;
+        }
+
+        /* 2. GENERAL STYLES (Default Light Theme) */
         body {
             font-family: 'InterStrategy', sans-serif;
-            background-color: #ffffff;
-            color: #000000;
+            background-color: var(--c-white);
+            color: var(--c-black);
             max-width: 768px;
             margin: 2rem auto;
             padding: 0 1rem;
@@ -74,7 +81,7 @@
         }
 
         a {
-            color: #000000;
+            color: var(--c-black);
             font-weight: bold;
             text-decoration: underline;
             transition: color 0.3s ease-in-out;
@@ -85,26 +92,57 @@
             margin: 1rem 0;
         }
 
-        #text-input {
+        .text-input-wrapper {
+            position: relative;
             flex-grow: 1;
+            display: flex; 
+            background-color: var(--c-white);
+            border: 3px solid var(--c-black);
+            /* --- FIXED: The "border-right: none;" rule was removed from here --- */
+            transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+        
+        #text-input {
+            width: 100%;
+            box-sizing: border-box; 
             padding: 0.75rem;
             font-size: 1.2rem;
-            border: 3px solid #000000;
-            background-color: #ffffff;
-            color: #000000;
+            color: var(--c-black);
             font-family: 'InterStrategy', sans-serif;
             border-radius: 0;
             -webkit-appearance: none;
-            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+            border: none;
+            background: transparent;
+            outline: none;
+            transition: color 0.3s ease-in-out;
+        }
+        
+        #text-input::placeholder { color: transparent; }
+
+        .placeholder-label {
+            position: absolute;
+            top: 50%;
+            left: 0.75rem; 
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: var(--c-black);
+            opacity: 0.6;
+            pointer-events: none; 
+            transition: color 0.3s ease-in-out, opacity 0.2s ease-in-out;
+        }
+
+        #text-input:focus + .placeholder-label,
+        #text-input:not(:placeholder-shown) + .placeholder-label {
+            opacity: 0;
         }
 
         #add-symbol-btn {
             padding: 0.25rem 2rem;
             font-size: 2.5rem;
-            border: 3px solid #000000;
-            border-left: none;
-            background-color: #ffffff;
-            color: #000000;
+            border: 3px solid var(--c-black);
+            border-left: none; /* This now correctly removes only the button's left border */
+            background-color: var(--c-white);
+            color: var(--c-black);
             cursor: pointer;
             font-family: 'InterStrategy', sans-serif;
             border-radius: 0;
@@ -116,7 +154,7 @@
             margin: 1.2rem 0;
             line-height: 1.2;
             word-wrap: break-word;
-            border-left: 3px solid #000000;
+            border-left: 3px solid var(--c-black);
             padding-left: 1rem;
             transition: border-left-color 0.3s ease-in-out;
         }
@@ -126,11 +164,11 @@
         .font-display.half-size { font-size: 1.5rem; }
         .font-display.double-size { font-size: 6rem; }
 
-        /* 5. THEME TOGGLE & DARK MODE */
+        /* 5. THEME TOGGLE & THEME STYLES */
         #theme-toggle {
             width: 70px;
             height: 38px;
-            background-color: #000000; /* Track color in light mode */
+            background-color: var(--c-black);
             border-radius: 19px;
             border: none;
             cursor: pointer;
@@ -146,39 +184,70 @@
             left: 4px;
             width: 30px;
             height: 30px;
-            background-color: #ffffff; /* Knob color in light mode */
+            background-color: var(--c-white);
             border-radius: 50%;
             transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
         }
-        
-        /* Dark Mode Styles */
-        body.dark-mode {
-            background-color: #000000;
-            color: #ffffff;
-        }
 
-        body.dark-mode #theme-toggle {
-            background-color: #ffffff; /* Track color in dark mode */
-        }
+        .knob.slide-right { transform: translateX(32px); }
         
-        body.dark-mode .knob {
-            background-color: #000000; /* Knob color in dark mode */
-            transform: translateX(32px); /* Slide the knob to the right */
-        }
+        /* --- THEME-SPECIFIC STYLES --- */
 
-        body.dark-mode a { color: #ffffff; }
-        body.dark-mode #text-input {
-            background-color: #000000;
-            color: #ffffff;
-            border-color: #ffffff;
-        }
-        body.dark-mode #add-symbol-btn {
-            background-color: #000000;
-            color: #ffffff;
-            border-color: #ffffff;
-        }
-        body.dark-mode .font-display { border-left-color: #ffffff; }
+        /* -- Theme 2: White on Black -- */
+        body[data-theme="dark"] { background-color: var(--c-black); color: var(--c-white); }
+        body[data-theme="dark"] #theme-toggle { background-color: var(--c-white); }
+        body[data-theme="dark"] .knob { background-color: var(--c-black); }
+        body[data-theme="dark"] a { color: var(--c-white); }
+        body[data-theme="dark"] .text-input-wrapper { background-color: var(--c-black); border-color: var(--c-white); }
+        body[data-theme="dark"] #text-input { color: var(--c-white); }
+        body[data-theme="dark"] .placeholder-label { color: var(--c-white); }
+        body[data-theme="dark"] #add-symbol-btn { background-color: var(--c-black); color: var(--c-white); border-color: var(--c-white); }
+        body[data-theme="dark"] .font-display { border-left-color: var(--c-white); }
+
+        /* -- Theme 3: Orange on White -- */
+        body[data-theme="orange-on-white"] { background-color: var(--c-white); color: var(--c-orange); }
+        body[data-theme="orange-on-white"] #theme-toggle { background-color: var(--c-orange); }
+        body[data-theme="orange-on-white"] .knob { background-color: var(--c-white); }
+        body[data-theme="orange-on-white"] a { color: var(--c-orange); }
+        body[data-theme="orange-on-white"] .text-input-wrapper { background-color: var(--c-white); border-color: var(--c-orange); }
+        body[data-theme="orange-on-white"] #text-input { color: var(--c-orange); }
+        body[data-theme="orange-on-white"] .placeholder-label { color: var(--c-orange); }
+        body[data-theme="orange-on-white"] #add-symbol-btn { background-color: var(--c-white); color: var(--c-orange); border-color: var(--c-orange); }
+        body[data-theme="orange-on-white"] .font-display { border-left-color: var(--c-orange); }
         
+        /* -- Theme 4: Black on Orange -- */
+        body[data-theme="black-on-orange"] { background-color: var(--c-orange); color: var(--c-black); }
+        body[data-theme="black-on-orange"] #theme-toggle { background-color: var(--c-black); }
+        body[data-theme="black-on-orange"] .knob { background-color: var(--c-orange); }
+        body[data-theme="black-on-orange"] a { color: var(--c-black); }
+        body[data-theme="black-on-orange"] .text-input-wrapper { background-color: var(--c-orange); border-color: var(--c-black); }
+        body[data-theme="black-on-orange"] #text-input { color: var(--c-black); }
+        body[data-theme="black-on-orange"] .placeholder-label { color: var(--c-black); }
+        body[data-theme="black-on-orange"] #add-symbol-btn { background-color: var(--c-orange); color: var(--c-black); border-color: var(--c-black); }
+        body[data-theme="black-on-orange"] .font-display { border-left-color: var(--c-black); }
+
+        /* -- Theme 5: Orange on Black -- */
+        body[data-theme="orange-on-black"] { background-color: var(--c-black); color: var(--c-orange); }
+        body[data-theme="orange-on-black"] #theme-toggle { background-color: var(--c-orange); }
+        body[data-theme="orange-on-black"] .knob { background-color: var(--c-black); }
+        body[data-theme="orange-on-black"] a { color: var(--c-orange); }
+        body[data-theme="orange-on-black"] .text-input-wrapper { background-color: var(--c-black); border-color: var(--c-orange); }
+        body[data-theme="orange-on-black"] #text-input { color: var(--c-orange); }
+        body[data-theme="orange-on-black"] .placeholder-label { color: var(--c-orange); }
+        body[data-theme="orange-on-black"] #add-symbol-btn { background-color: var(--c-black); color: var(--c-orange); border-color: var(--c-orange); }
+        body[data-theme="orange-on-black"] .font-display { border-left-color: var(--c-orange); }
+
+        /* -- Theme 6: White on Orange -- */
+        body[data-theme="white-on-orange"] { background-color: var(--c-orange); color: var(--c-white); }
+        body[data-theme="white-on-orange"] #theme-toggle { background-color: var(--c-white); }
+        body[data-theme="white-on-orange"] .knob { background-color: var(--c-orange); }
+        body[data-theme="white-on-orange"] a { color: var(--c-white); }
+        body[data-theme="white-on-orange"] .text-input-wrapper { background-color: var(--c-orange); border-color: var(--c-white); }
+        body[data-theme="white-on-orange"] #text-input { color: var(--c-white); }
+        body[data-theme="white-on-orange"] .placeholder-label { color: var(--c-white); }
+        body[data-theme="white-on-orange"] #add-symbol-btn { background-color: var(--c-orange); color: var(--c-white); border-color: var(--c-white); }
+        body[data-theme="white-on-orange"] .font-display { border-left-color: var(--c-white); }
+
         /* 6. RESPONSIVE DESIGN FOR MOBILE */
         @media (max-width: 600px) {
             body { margin-top: 1rem; }
@@ -187,10 +256,7 @@
             .font-display.half-size { font-size: 1rem; }
             .font-display.double-size { font-size: 4rem; }
             #add-symbol-btn { padding: 0.75rem 1rem; }
-            #theme-toggle {
-                transform: scale(0.85);
-                transform-origin: right center;
-            }
+            #theme-toggle { transform: scale(0.85); transform-origin: right center; }
         }
     </style>
 </head>
@@ -199,7 +265,7 @@
     <div class="header-container">
         <h1>InterStrategy</h1>
         <button id="theme-toggle" title="Toggle theme">
-            <span class="knob"></span>
+            <span id="theme-knob" class="knob"></span>
         </button>
     </div>
 
@@ -209,7 +275,10 @@
     </p>
 
     <div class="input-container">
-        <input type="text" id="text-input" placeholder="Type something..." aria-label="Text to display">
+        <div class="text-input-wrapper">
+            <input type="text" id="text-input" placeholder="Type something..." aria-label="Text to display">
+            <label for="text-input" class="placeholder-label">Type something...</label>
+        </div>
         <button id="add-symbol-btn" title="Add ₿ Symbol">₿</button>
     </div>
 
@@ -231,22 +300,44 @@
         
         // --- Theme Toggler Logic ---
         const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeKnob = document.getElementById('theme-knob');
         const bodyEl = document.body;
+        const themes = [
+            'light', 'dark', 'orange-on-white', 'black-on-orange', 'orange-on-black', 'white-on-orange'
+        ];
+        
+        function applyTheme(theme) {
+            bodyEl.dataset.theme = theme;
+            const newIndex = themes.indexOf(theme);
+            
+            if (newIndex % 2 !== 0) {
+                themeKnob.classList.add('slide-right');
+            } else {
+                themeKnob.classList.remove('slide-right');
+            }
+            
+            if (theme === 'light') {
+                localStorage.removeItem('theme');
+            } else {
+                localStorage.setItem('theme', theme);
+            }
+        }
 
         const applySavedTheme = () => {
             const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                bodyEl.classList.add('dark-mode');
+            if (savedTheme && themes.includes(savedTheme)) {
+                applyTheme(savedTheme);
+            } else {
+                applyTheme('light');
             }
         };
 
         themeToggleBtn.addEventListener('click', () => {
-            bodyEl.classList.toggle('dark-mode');
-            if (bodyEl.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
-            } else {
-                localStorage.removeItem('theme');
-            }
+            const currentTheme = bodyEl.dataset.theme || 'light';
+            const currentIndex = themes.indexOf(currentTheme);
+            const nextIndex = (currentIndex + 1) % themes.length;
+            const nextTheme = themes[nextIndex];
+            applyTheme(nextTheme);
         });
         
         // --- Font Playground Logic ---
